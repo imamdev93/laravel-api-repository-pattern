@@ -25,3 +25,7 @@ jobs:
         run: php artisan optimize
       - name: Run Test
         run: php artisan test --coverage-html tests/report/coverage
+      - name: Set Up Codeclimate and Send Report Codeclimate
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORT_ID }}
