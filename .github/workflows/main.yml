@@ -24,4 +24,4 @@ jobs:
       - name: Optimize
         run: php artisan optimize
       - name: Run Test
-        uses: php artisan test --coverage-html tests/report/coverage
+        run: php artisan test --coverage-html tests/report/coverage
