@@ -9,19 +9,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE:  laravel_db
-        ports:
-          - 33306:3306
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
     steps:
       - uses: actions/checkout@v2
       - name: Install PHP versions
@@ -38,7 +25,7 @@ jobs:
         env:
           DB_CONNECTION: mysql
           DB_DATABASE: laravel_db
-          DB_PORT: 33306
+          DB_PORT: 3306
           DB_USERNAME: root
         run: php artisan migrate
       - name: Optimize
@@ -47,7 +34,7 @@ jobs:
         env:
           DB_CONNECTION: mysql
           DB_DATABASE: laravel_db
-          DB_PORT: 33306
+          DB_PORT: 3306
           DB_USERNAME: root
       - name: Run Test
         run: vendor/bin/phpunit
