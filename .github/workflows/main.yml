@@ -9,6 +9,14 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE:  laravel_db
+        ports:
+          - 3306:3306
     steps:
       - uses: actions/checkout@v2
       - name: Install PHP versions
@@ -21,8 +29,21 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Generate Key
         run: php artisan key:generate
+      - name: Run Migrations
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: laravel_db
+          DB_PORT: 3306
+          DB_USERNAME: root
+        run: php artisan migrate
       - name: Optimize
         run: php artisan optimize
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        env:
+          DB_CONNECTION: mysql
+          DB_DATABASE: laravel_db
+          DB_PORT: 3306
+          DB_USERNAME: root
       - name: Run Test
         run: vendor/bin/phpunit
       - name: Set Up Codeclimate and Send Report Codeclimate
