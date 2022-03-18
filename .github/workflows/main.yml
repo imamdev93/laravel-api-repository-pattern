@@ -24,7 +24,7 @@ jobs:
       - name: Optimize
         run: php artisan optimize
       - name: Run Test
-        run: php artisan test --coverage-html tests/report/coverage
+        run: vendor/bin/phpunit
       - name: Set Up Codeclimate and Send Report Codeclimate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
