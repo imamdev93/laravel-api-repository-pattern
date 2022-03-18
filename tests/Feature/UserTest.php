@@ -165,6 +165,8 @@ class UserTest extends TestCase
         $this->data = [
             'name' => $this->faker->name(),
             'email' => $this->user->email,
+            'password' => '12345678',
+            'password_confirmation' => '12345678',
         ];
 
         $this->put("{$this->url}/{$this->user->id}",$this->data)
