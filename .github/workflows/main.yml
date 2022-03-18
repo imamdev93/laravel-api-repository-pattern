@@ -39,17 +39,16 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Generate Key
         run: php artisan key:generate
-      - name: Run Migrations
-        env:
-          DB_CONNECTION: mysql
-          DB_DATABASE: laravel_db
-          DB_PORT: 3306
-          DB_USERNAME: root
+      - name: Run Migration
         run: php artisan migrate
+        env:
+          DB_PORT: 3306
       - name: Optimize
         run: php artisan optimize
       - name: Run Test
         run: vendor/bin/phpunit
+        env:
+          DB_PORT: 3306
       - name: Set Up Codeclimate and Send Report Codeclimate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
